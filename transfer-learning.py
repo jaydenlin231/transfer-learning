@@ -5,7 +5,7 @@ import tensorflow_datasets as tfds
 from tensorflow import keras
 from keras.layers import Dense
 
-
+data_dir = pathlib.Path(data_dir)
 
 base_model = keras.applications.MobileNetV2(
     input_shape=None,
@@ -21,7 +21,11 @@ base_model = keras.applications.MobileNetV2(
 # freeze the base model.
 base_model.trainable = False
 
-print(base_model.summary())
+
+batch_size = 32
+img_height = 150
+img_width = 150
+
 
 inputs = keras.Input(shape=(150, 150, 3))
 # We make sure that the base_model is running in inference mode here,
@@ -30,8 +34,8 @@ inputs = keras.Input(shape=(150, 150, 3))
 x = base_model(inputs, training=False)
 # Convert features of shape `base_model.output_shape[1:]` to vectors
 x = keras.layers.GlobalAveragePooling2D()(x)
-# A Dense classifier with a single unit (binary classification)
-outputs = keras.layers.Dense(1)(x)
+# A Dense classifier with 5 classes
+outputs = keras.layers.Dense(5)(x)
 model = keras.Model(inputs, outputs)
 
 
