@@ -196,7 +196,7 @@ def task_7():
 
 def task_8():
     old_weights = model.get_weights()
-    momentum_tests = [0.75, 0.5, 0.75]
+    momentum_tests = [0.25, 0.5, 0.75]
     lr = 0.001
     for momentum in momentum_tests:
         model.set_weights(old_weights)
